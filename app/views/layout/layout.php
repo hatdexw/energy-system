@@ -70,7 +70,30 @@
     <div class="flex-1 flex flex-col overflow-hidden">
         <header class="bg-neutral-50 shadow-sm p-4 flex justify-between items-center border-b border-neutral-200">
             <h1 class="text-2xl font-semibold text-neutral-800"><?php echo $page_title ?? 'Dashboard'; ?></h1>
-            <div class="relative">
+            <div class="relative flex items-center space-x-4">
+                <!-- Notification Icon -->
+                <div class="relative">
+                    <button id="notification-button" class="p-2 rounded-full text-neutral-700 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        <?php $notification_count = 3; // Exemplo: buscar do banco de dados ?>
+                        <?php if ($notification_count > 0): ?>
+                            <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full"><?php echo $notification_count; ?></span>
+                        <?php endif; ?>
+                    </button>
+                    <!-- Notification Dropdown -->
+                    <div id="notification-menu" class="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50 hidden border border-neutral-200">
+                        <div class="px-4 py-2 text-sm text-gray-700 font-semibold border-b border-gray-200">Notificações</div>
+                        <?php if ($notification_count > 0): ?>
+                            <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">Nova mensagem de Chamado #123</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">Seu Chamado #456 foi atualizado</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">Lembrete: Reunião às 14h</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-blue-600 hover:bg-neutral-100 border-t border-gray-200 text-center">Ver todas</a>
+                        <?php else: ?>
+                            <div class="px-4 py-2 text-sm text-gray-500">Nenhuma notificação nova.</div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
                 <!-- Profile Dropdown Trigger -->
                 <button id="profile-menu-button" class="flex items-center space-x-2 text-neutral-700 focus:outline-none p-2 rounded-full hover:bg-neutral-100 transition duration-200 ease-in-out">
                     <span class="hidden sm:inline font-medium text-neutral-700"><?php echo htmlspecialchars($_SESSION['full_name'] ?? 'Guest'); ?></span>
@@ -105,6 +128,8 @@
     <script>
         const profileMenuButton = document.getElementById('profile-menu-button');
         const profileMenu = document.getElementById('profile-menu');
+        const notificationButton = document.getElementById('notification-button');
+        const notificationMenu = document.getElementById('notification-menu');
         const sidebarToggle = document.getElementById('sidebar-toggle');
         const sidebar = document.getElementById('sidebar');
         const navLinks = document.querySelectorAll('nav ul li a');
@@ -114,14 +139,29 @@
             profileMenuButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 profileMenu.classList.toggle('hidden');
+                notificationMenu.classList.add('hidden'); // Close notification menu if profile menu is opened
             });
         }
 
-        // Close profile menu if clicked outside
+        // Notification Dropdown Toggle
+        if (notificationButton) {
+            notificationButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                notificationMenu.classList.toggle('hidden');
+                profileMenu.classList.add('hidden'); // Close profile menu if notification menu is opened
+            });
+        }
+
+        // Close menus if clicked outside
         window.addEventListener('click', (event) => {
             if (profileMenu && !profileMenu.classList.contains('hidden')) {
                 if (!profileMenu.contains(event.target) && !profileMenuButton.contains(event.target)) {
                     profileMenu.classList.add('hidden');
+                }
+            }
+            if (notificationMenu && !notificationMenu.classList.contains('hidden')) {
+                if (!notificationMenu.contains(event.target) && !notificationButton.contains(event.target)) {
+                    notificationMenu.classList.add('hidden');
                 }
             }
         });
