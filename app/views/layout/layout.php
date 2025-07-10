@@ -125,7 +125,7 @@ if ($logged_in_user_id) {
                 </button>
 
                 <!-- Dropdown Menu -->
-                <div id="profile-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden border border-neutral-200">
+                <div id="profile-menu" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden border border-neutral-200">
                     <a href="/energy-system/profile" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">Meu Perfil</a>
                     <a href="/energy-system/change-password" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">Trocar Senha</a>
                     <a href="/energy-system/logout" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">Sair</a>
