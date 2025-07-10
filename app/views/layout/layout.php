@@ -36,6 +36,8 @@
                         <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897m4.905-2.727l.777 2.897m0 4.905l.777 2.897M2.239 7.188l2.897.777m4.905 0l2.897.777M7.188 16.812l.777 2.897M16.812 7.188l2.897.777M16.812 16.812l2.897.777M3 15.25V4.75A2.75 2.75 0 015.75 2h12.5A2.75 2.75 0 0121 4.75v10.5A2.75 2.75 0 0118.25 18H5.75A2.75 2.75 0 013 15.25z"></path></svg>
                         Chamados
                     </a></li>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                     <li><a href="/energy-system/perifericos" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
                         <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-2-1m0 0l-2 1m2-1V4a2 2 0 012-2h4a2 2 0 012 2v12m-4 0h4m-4 0l-2 5m2-5l2 5m7.5-3H12M12 10.5V15m0 0l-2 5m2-5l2 5m7.5-3H12"></path></svg>
                         Periféricos
