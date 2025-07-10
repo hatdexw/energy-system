@@ -1,41 +1,52 @@
 <?php
-
-$title = "Perfil";
-$page_title = "Seu Perfil";
-ob_start();
+$page_title = 'Meu Perfil';
 ?>
 
-<div class="bg-white shadow-md rounded-lg p-6">
-    <h2 class="text-2xl font-bold mb-4">Atualizar Perfil</h2>
-    <form action="/energy-system/profile/update" method="POST">
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="full_name">Nome Completo</label>
-<input type="text" name="full_name" id="full_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-200 cursor-not-allowed" value="<?php echo $user_data['full_name']; ?>" disabled>
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">Meu Perfil</h2>
+
+        <?php if (isset($_SESSION['success_message'])): ?>
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline"><?php echo $_SESSION['success_message']; ?></span>
+                <?php unset($_SESSION['success_message']); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error_message'])): ?>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <span class="block sm:inline"><?php echo $_SESSION['error_message']; ?></span>
+                <?php unset($_SESSION['error_message']); ?>
+            </div>
+        <?php endif; ?>
+
+        <div class="flex items-center space-x-6 mb-8">
+            <div class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                <?php if (!empty($user['profile_picture'])): ?>
+                    <img src="/energy-system/<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Foto de Perfil" class="w-full h-full object-cover">
+                <?php else: ?>
+                    <svg class="w-20 h-20 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                    </svg>
+                <?php endif; ?>
+            </div>
+            <div>
+                <h3 class="text-2xl font-semibold text-gray-700"><?php echo htmlspecialchars($user['full_name']); ?></h3>
+                <p class="text-gray-500"><?php echo htmlspecialchars($user['email']); ?></p>
+            </div>
         </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
-            <input type="email" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-400 focus:border-transparent" value="<?php echo $user_data['email']; ?>">
-        </div>
-        <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="full_name">Full Name</label>
-            <input type="text" name="full_name" id="full_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-400 focus:border-transparent" value="<?php echo $user_data['full_name']; ?>">
-        </div>
-        <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="sector_id">Setor</label>
-            <select name="sector_id" id="sector_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-400 focus:border-transparent">
-                <option value="">None</option>
-                <?php foreach ($sectors as $s): ?>
-                    <option value="<?php echo $s['id']; ?>" <?php echo ($s['id'] == $user_data['sector_id']) ? 'selected' : ''; ?>><?php echo $s['name']; ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="flex items-center justify-end">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">Atualizar Perfil</button>
-        </div>
-    </form>
+
+        <form action="/energy-system/profile/upload" method="POST" enctype="multipart/form-data">
+            <div class="mb-6">
+                <label for="profile_picture" class="block text-sm font-medium text-gray-700 mb-2">Alterar Foto de Perfil</label>
+                <div class="flex items-center">
+                    <input type="file" name="profile_picture" id="profile_picture" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required>
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
 </div>
-
-<?php
-$content = ob_get_clean();
-require_once 'app/views/layout/layout.php';
-?>

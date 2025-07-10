@@ -90,4 +90,14 @@ class User
 
         return $stmt->execute();
     }
+
+    public function updateProfilePicture($id, $filepath)
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("UPDATE users SET profile_picture = ? WHERE id = ?");
+        $stmt->bind_param("si", $filepath, $id);
+
+        return $stmt->execute();
+    }
 }
