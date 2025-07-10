@@ -19,8 +19,8 @@ class AuthController
         if ($db_user && password_verify($_POST['password'], $db_user['password'])) {
             $_SESSION['user_id'] = $db_user['id'];
             $_SESSION['full_name'] = $db_user['full_name'];
-            $_SESSION['full_name'] = $db_user['full_name'];
             $_SESSION['role'] = $db_user['role'];
+            $_SESSION['profile_picture'] = $db_user['profile_picture'];
             header('Location: /energy-system/dashboard');
             exit();
         } else {

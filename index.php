@@ -10,6 +10,7 @@ require_once 'app/controllers/AuditController.php';
 require_once 'app/controllers/SectorController.php';
 require_once 'app/controllers/UserController.php';
 require_once 'app/controllers/PerifericoController.php';
+require_once 'app/controllers/ProfileController.php';
 
 $url = isset($_GET['url']) ? $_GET['url'] : 'home';
 
@@ -147,6 +148,14 @@ switch ($url) {
         $controller = new PerifericoController();
         $id = $_GET['id'] ?? null;
         $controller->delete($id);
+        break;
+    case 'profile':
+        $controller = new ProfileController();
+        $controller->index();
+        break;
+    case 'profile/upload':
+        $controller = new ProfileController();
+        $controller->upload();
         break;
     default:
         // Not Found

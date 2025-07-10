@@ -10,7 +10,9 @@ class ProfileController
         $user = $userModel->findById($_SESSION['user_id']);
 
         $page_title = 'Meu Perfil';
-        $content = 'app/views/profile/index.php';
+        ob_start();
+        include 'app/views/profile/index.php';
+        $content = ob_get_clean();
         require_once 'app/views/layout/layout.php';
     }
 

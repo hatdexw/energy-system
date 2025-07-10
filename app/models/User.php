@@ -20,7 +20,7 @@ class User
     {
         global $conn;
 
-        $stmt = $conn->prepare("SELECT id, username, password, email, full_name, sector_id, role FROM users WHERE username = ?");
+        $stmt = $conn->prepare("SELECT id, username, password, email, full_name, sector_id, role, profile_picture FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
 
@@ -33,7 +33,7 @@ class User
     {
         global $conn;
 
-        $stmt = $conn->prepare("SELECT id, username, password, email, full_name, sector_id, role FROM users WHERE id = ?");
+        $stmt = $conn->prepare("SELECT id, username, password, email, full_name, sector_id, role, profile_picture FROM users WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
 
