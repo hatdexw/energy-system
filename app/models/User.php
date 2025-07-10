@@ -66,9 +66,92 @@ class User
     {
         global $conn;
 
-        $result = $conn->query("SELECT id, username, email, full_name, sector_id, role FROM users");
+        $result = $conn->query("SELECT id, username, email, full_name, sector_id, role, profile_picture FROM users");
 
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getFilteredAndPaginatedUsers($search, $filter_role, $filter_sector, $limit, $offset)
+    {
+        global $conn;
+
+        $query = "SELECT u.id, u.username, u.email, u.full_name, u.sector_id, u.role, u.profile_picture, s.name as sector_name FROM users u LEFT JOIN sectors s ON u.sector_id = s.id";
+        $conditions = [];
+        $params = [];
+        $types = "";
+
+        if (!empty($search)) {
+            $conditions[] = "(u.username LIKE ? OR u.email LIKE ? OR u.full_name LIKE ?)";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $types .= "sss";
+        }
+        if (!empty($filter_role)) {
+            $conditions[] = "u.role = ?";
+            $params[] = $filter_role;
+            $types .= "s";
+        }
+        if (!empty($filter_sector)) {
+            $conditions[] = "u.sector_id = ?";
+            $params[] = $filter_sector;
+            $types .= "i";
+        }
+
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        $query .= " ORDER BY u.id DESC LIMIT ? OFFSET ?";
+        $params[] = $limit;
+        $params[] = $offset;
+        $types .= "ii";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function countFilteredUsers($search, $filter_role, $filter_sector)
+    {
+        global $conn;
+
+        $query = "SELECT COUNT(*) FROM users u LEFT JOIN sectors s ON u.sector_id = s.id";
+        $conditions = [];
+        $params = [];
+        $types = "";
+
+        if (!empty($search)) {
+            $conditions[] = "(u.username LIKE ? OR u.email LIKE ? OR u.full_name LIKE ?)";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $types .= "sss";
+        }
+        if (!empty($filter_role)) {
+            $conditions[] = "u.role = ?";
+            $params[] = $filter_role;
+            $types .= "s";
+        }
+        if (!empty($filter_sector)) {
+            $conditions[] = "u.sector_id = ?";
+            $params[] = $filter_sector;
+            $types .= "i";
+        }
+
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        $stmt = $conn->prepare($query);
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_row()[0];
     }
 
     public function delete($id)
