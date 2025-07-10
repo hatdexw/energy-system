@@ -176,7 +176,7 @@ class Chamado
     public function getRecentOpenChamados($limit = 5)
     {
         global $conn;
-        $stmt = $conn->prepare("SELECT c.*, u.full_name FROM chamados c LEFT JOIN users u ON c.user_id = u.id WHERE c.status = 'Aberto' ORDER BY c.created_at DESC LIMIT ?");
+        $stmt = $conn->prepare("SELECT c.*, u.full_name FROM chamados c LEFT JOIN users u ON c.requerente_id = u.id WHERE c.status = 'Aberto' ORDER BY c.created_at DESC LIMIT ?");
         $stmt->bind_param("i", $limit);
         $stmt->execute();
         $result = $stmt->get_result();
