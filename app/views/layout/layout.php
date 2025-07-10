@@ -1,3 +1,16 @@
+<?php
+require_once 'app/models/Notification.php';
+
+$notificationModel = new Notification();
+$logged_in_user_id = $_SESSION['user_id'] ?? null;
+$unread_notifications = [];
+$notification_count = 0;
+
+if ($logged_in_user_id) {
+    $unread_notifications = $notificationModel->getUnreadNotifications($logged_in_user_id);
+    $notification_count = count($unread_notifications);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +23,7 @@
 <body class="bg-neutral-100 font-sans flex h-screen">
     <!-- Sidebar Toggle Button (for mobile) -->
     <button id="sidebar-toggle" class="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-gray-800 text-white focus:outline-none">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
     </button>
 
     <!-- Sidebar -->
@@ -75,7 +86,7 @@
                 <div class="relative">
                     <button id="notification-button" class="p-2 rounded-full text-neutral-700 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                        <?php $notification_count = 3; // Exemplo: buscar do banco de dados ?>
+                        
                         <?php if ($notification_count > 0): ?>
                             <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full"><?php echo $notification_count; ?></span>
                         <?php endif; ?>
@@ -84,10 +95,12 @@
                     <div id="notification-menu" class="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50 hidden border border-neutral-200">
                         <div class="px-4 py-2 text-sm text-gray-700 font-semibold border-b border-gray-200">Notificações</div>
                         <?php if ($notification_count > 0): ?>
-                            <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">Nova mensagem de Chamado #123</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">Seu Chamado #456 foi atualizado</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">Lembrete: Reunião às 14h</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-blue-600 hover:bg-neutral-100 border-t border-gray-200 text-center">Ver todas</a>
+                            <?php foreach ($unread_notifications as $notification): ?>
+                                <a href="/energy-system/notifications/mark-as-read?id=<?php echo $notification['id']; ?>" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">
+                                    <?php echo htmlspecialchars($notification['message']); ?>
+                                </a>
+                            <?php endforeach; ?>
+                            <a href="/energy-system/notifications/mark-as-read" class="block px-4 py-2 text-sm text-blue-600 hover:bg-neutral-100 border-t border-gray-200 text-center">Marcar todas como lidas</a>
                         <?php else: ?>
                             <div class="px-4 py-2 text-sm text-gray-500">Nenhuma notificação nova.</div>
                         <?php endif; ?>

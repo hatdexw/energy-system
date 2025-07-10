@@ -11,6 +11,7 @@ require_once 'app/controllers/SectorController.php';
 require_once 'app/controllers/UserController.php';
 require_once 'app/controllers/PerifericoController.php';
 require_once 'app/controllers/ProfileController.php';
+require_once 'app/controllers/NotificationController.php';
 
 $url = isset($_GET['url']) ? $_GET['url'] : 'home';
 
@@ -156,6 +157,10 @@ switch ($url) {
     case 'profile/upload':
         $controller = new ProfileController();
         $controller->upload();
+        break;
+    case 'notifications/mark-as-read':
+        $controller = new NotificationController();
+        $controller->markAsRead();
         break;
     default:
         // Not Found

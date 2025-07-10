@@ -59,11 +59,11 @@ class Chamado
         return $stmt->execute();
     }
 
-    public function getFilteredAndPaginatedChamados($search, $filter_status, $filter_prioridade, $filter_assigned_to, $limit, $offset)
+    public function getFilteredAndPaginatedChamados($search, $filter_status, $filter_prioridade, $filter_assigned_to, $limit, $offset, $logged_in_user_id, $logged_in_user_role)
     {
         global $conn;
 
-        $query = "SELECT c.*, u.full_name as assigned_to_full_name FROM chamados c LEFT JOIN users u ON c.user_id = u.id";
+        $query = "SELECT c.*, u.full_name as assigned_to_full_name, r.full_name as requerente_full_name FROM chamados c LEFT JOIN users u ON c.user_id = u.id LEFT JOIN users r ON c.requerente_id = r.id";
         $conditions = [];
         $params = [];
         $types = "";
@@ -88,6 +88,14 @@ class Chamado
             $conditions[] = "c.user_id = ?";
             $params[] = $filter_assigned_to;
             $types .= "i";
+        }
+
+        // Restrição de visibilidade para usuários não-admin
+        if ($logged_in_user_role !== 'admin') {
+            $conditions[] = "(c.requerente_id = ? OR c.user_id = ?)";
+            $params[] = $logged_in_user_id;
+            $params[] = $logged_in_user_id;
+            $types .= "ii";
         }
 
         if (!empty($conditions)) {
@@ -103,16 +111,14 @@ class Chamado
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
 
-        $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function countFilteredChamados($search, $filter_status, $filter_prioridade, $filter_assigned_to)
+    public function countFilteredChamados($search, $filter_status, $filter_prioridade, $filter_assigned_to, $logged_in_user_id, $logged_in_user_role)
     {
         global $conn;
 
-        $query = "SELECT COUNT(*) FROM chamados c LEFT JOIN users u ON c.user_id = u.id";
+        $query = "SELECT COUNT(*) FROM chamados c LEFT JOIN users u ON c.user_id = u.id LEFT JOIN users r ON c.requerente_id = r.id";
         $conditions = [];
         $params = [];
         $types = "";
@@ -139,6 +145,14 @@ class Chamado
             $types .= "i";
         }
 
+        // Restrição de visibilidade para usuários não-admin
+        if ($logged_in_user_role !== 'admin') {
+            $conditions[] = "(c.requerente_id = ? OR c.user_id = ?)";
+            $params[] = $logged_in_user_id;
+            $params[] = $logged_in_user_id;
+            $types .= "ii";
+        }
+
         if (!empty($conditions)) {
             $query .= " WHERE " . implode(" AND ", $conditions);
         }
@@ -149,9 +163,7 @@ class Chamado
         }
         $stmt->execute();
 
-        $result = $stmt->get_result();
-
-        return $result->fetch_row()[0];
+        return $stmt->get_result()->fetch_row()[0];
     }
 
     public function countAll()
