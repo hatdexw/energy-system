@@ -66,9 +66,10 @@ class ChamadoController
             $status = $_POST['status'] ?? 'Aberto';
             $prioridade = $_POST['prioridade'] ?? 'Baixa';
             $user_id = empty($_POST['user_id']) ? null : $_POST['user_id']; // Usuário responsável
+            $requerente_id = $_POST['requerente']; // ID do requerente do campo oculto
 
             $chamadoModel = new Chamado();
-            if ($chamadoModel->create($titulo, $descricao, $tipo, $status, $prioridade, $user_id)) {
+            if ($chamadoModel->create($titulo, $descricao, $tipo, $status, $prioridade, $user_id, $requerente_id)) {
                 header('Location: /energy-system/chamados');
                 exit();
             } else {

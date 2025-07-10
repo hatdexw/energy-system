@@ -66,13 +66,9 @@ ob_start(); // Inicia o output buffering
             <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <h2 class="text-lg font-bold mb-4 text-gray-800">Atores</h2>
                 <div class="mb-4">
-                    <label for="requerente" class="block text-gray-700 text-sm font-bold mb-2">Requerente:</label>
-                    <select name="requerente" id="requerente" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    <option value="">Selecione o Requerente</option>
-                                    <?php foreach ($users as $user): ?>
-                                        <option value="<?php echo $user['id']; ?>"><?php echo htmlspecialchars($user['full_name']); ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+                    <label for="requerente_name" class="block text-gray-700 text-sm font-bold mb-2">Requerente:</label>
+                    <input type="text" id="requerente_name" name="requerente_name" value="<?php echo htmlspecialchars($_SESSION['full_name']); ?>" class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100" readonly>
+                    <input type="hidden" name="requerente" value="<?php echo $_SESSION['user_id']; ?>">
                 </div>
                 <div class="mb-4">
                     <label for="observador" class="block text-gray-700 text-sm font-bold mb-2">Observador:</label>

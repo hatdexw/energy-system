@@ -4,12 +4,12 @@ require_once 'app/config/database.php';
 
 class Chamado
 {
-    public function create($titulo, $descricao, $tipo, $status, $prioridade, $user_id = null)
+    public function create($titulo, $descricao, $tipo, $status, $prioridade, $user_id = null, $requerente_id)
     {
         global $conn;
 
-        $stmt = $conn->prepare("INSERT INTO chamados (titulo, descricao, tipo, status, prioridade, user_id) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssi", $titulo, $descricao, $tipo, $status, $prioridade, $user_id);
+        $stmt = $conn->prepare("INSERT INTO chamados (titulo, descricao, tipo, status, prioridade, user_id, requerente_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssii", $titulo, $descricao, $tipo, $status, $prioridade, $user_id, $requerente_id);
 
         return $stmt->execute();
     }
