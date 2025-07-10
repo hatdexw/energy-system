@@ -18,7 +18,7 @@ class ChamadoController
 
         // Parâmetros de busca e filtro
         $search = $_GET['search'] ?? '';
-        $filter_status = $_GET['filter_status'] ?? 'Aberto';
+        $filter_status = $_GET['filter_status'] ?? '';
         $filter_prioridade = $_GET['filter_prioridade'] ?? '';
         $filter_assigned_to = $_GET['filter_assigned_to'] ?? '';
 

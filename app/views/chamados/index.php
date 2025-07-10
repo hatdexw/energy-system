@@ -4,7 +4,7 @@ ob_start(); // Inicia o output buffering
 
 // Captura os parâmetros de busca e filtro para manter na URL
 $current_search = $_GET['search'] ?? '';
-$current_filter_status = $_GET['filter_status'] ?? 'Aberto';
+$current_filter_status = $_GET['filter_status'] ?? '';
 $current_filter_prioridade = $_GET['filter_prioridade'] ?? '';
 $current_filter_assigned_to = $_GET['filter_assigned_to'] ?? '';
 
