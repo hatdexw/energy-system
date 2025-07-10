@@ -1,0 +1,14 @@
+# Ignore database configuration
+app/config/database.php
+
+# Ignore SQL files
+*.sql
+
+# Ignore node_modules
+node_modules/
+
+# Ignore binaries
+tailwindcss.exe
+
+# Ignore uploads
+uploads/
