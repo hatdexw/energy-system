@@ -46,5 +46,92 @@ class Periferico {
         $result = $stmt->get_result();
         return $result->fetch_row()[0];
     }
+
+    public function getFilteredAndPaginatedPerifericos($search, $filter_status, $filter_localizacao, $limit, $offset) {
+        global $conn;
+
+        $query = "SELECT * FROM perifericos";
+        $conditions = [];
+        $params = [];
+        $types = "";
+
+        if (!empty($search)) {
+            $conditions[] = "(nome LIKE ? OR marca LIKE ? OR modelo LIKE ? OR numero_serie LIKE ? OR patrimonio LIKE ? OR localizacao LIKE ?)";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $types .= "ssssss";
+        }
+        if (!empty($filter_status)) {
+            $conditions[] = "status = ?";
+            $params[] = $filter_status;
+            $types .= "s";
+        }
+        if (!empty($filter_localizacao)) {
+            $conditions[] = "localizacao = ?";
+            $params[] = $filter_localizacao;
+            $types .= "s";
+        }
+
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        $query .= " ORDER BY id DESC LIMIT ? OFFSET ?";
+        $params[] = $limit;
+        $params[] = $offset;
+        $types .= "ii";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param($types, ...$params);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function countFilteredPerifericos($search, $filter_status, $filter_localizacao) {
+        global $conn;
+
+        $query = "SELECT COUNT(*) FROM perifericos";
+        $conditions = [];
+        $params = [];
+        $types = "";
+
+        if (!empty($search)) {
+            $conditions[] = "(nome LIKE ? OR marca LIKE ? OR modelo LIKE ? OR numero_serie LIKE ? OR patrimonio LIKE ? OR localizacao LIKE ?)";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $params[] = "%" . $search . "%";
+            $types .= "ssssss";
+        }
+        if (!empty($filter_status)) {
+            $conditions[] = "status = ?";
+            $params[] = $filter_status;
+            $types .= "s";
+        }
+        if (!empty($filter_localizacao)) {
+            $conditions[] = "localizacao = ?";
+            $params[] = $filter_localizacao;
+            $types .= "s";
+        }
+
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        $stmt = $conn->prepare($query);
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_row()[0];
+    }
 }
 ?>

@@ -4,7 +4,34 @@ require_once 'app/models/Periferico.php';
 class PerifericoController {
     public function index() {
         $periferico_model = new Periferico();
-        $perifericos = $periferico_model->getAll();
+
+        // Parâmetros de busca e filtro
+        $search = $_GET['search'] ?? '';
+        $filter_status = $_GET['filter_status'] ?? '';
+        $filter_localizacao = $_GET['filter_localizacao'] ?? '';
+
+        // Parâmetros de paginação
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 10; // Número de periféricos por página
+        $offset = ($page - 1) * $limit;
+
+        // Obtém os periféricos filtrados e paginados
+        $perifericos = $periferico_model->getFilteredAndPaginatedPerifericos(
+            $search,
+            $filter_status,
+            $filter_localizacao,
+            $limit,
+            $offset
+        );
+
+        // Obtém o total de periféricos para a paginação
+        $totalPerifericos = $periferico_model->countFilteredPerifericos(
+            $search,
+            $filter_status,
+            $filter_localizacao
+        );
+        $totalPages = ceil($totalPerifericos / $limit);
+
         require 'app/views/perifericos/index.php';
     }
 
