@@ -40,10 +40,7 @@ if ($logged_in_user_id) {
                     Inicio
                 </a></li>
                 <?php if (isset($_SESSION['role']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'user')): ?>
-                    <li><a href="/energy-system/documents" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
-                        <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        Documentos
-                    </a></li>
+                    
                     <li><a href="/energy-system/normative_documents" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
                         <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         Documentos Normativos
