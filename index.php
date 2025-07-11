@@ -13,6 +13,7 @@ require_once 'app/controllers/PerifericoController.php';
 require_once 'app/controllers/ProfileController.php';
 require_once 'app/controllers/NotificationController.php';
 require_once 'app/controllers/ReuniaoController.php';
+require_once 'app/controllers/NormativeDocumentController.php';
 
 $url = isset($_GET['url']) ? $_GET['url'] : 'home';
 
@@ -203,6 +204,62 @@ switch ($url) {
     case 'energy-system/reunioes/delete':
         $controller = new ReuniaoController();
         $controller->delete();
+        break;
+    case 'normative_documents':
+        $controller = new NormativeDocumentController();
+        $controller->index();
+        break;
+    case 'energy-system/normative_documents':
+        $controller = new NormativeDocumentController();
+        $controller->index();
+        break;
+    case 'normative_documents/create':
+        $controller = new NormativeDocumentController();
+        $controller->create();
+        break;
+    case 'energy-system/normative_documents/create':
+        $controller = new NormativeDocumentController();
+        $controller->create();
+        break;
+    case 'normative_documents/show':
+        $controller = new NormativeDocumentController();
+        $controller->show();
+        break;
+    case 'energy-system/normative_documents/show':
+        $controller = new NormativeDocumentController();
+        $controller->show();
+        break;
+    case 'normative_documents/edit':
+        $controller = new NormativeDocumentController();
+        $controller->edit();
+        break;
+    case 'energy-system/normative_documents/edit':
+        $controller = new NormativeDocumentController();
+        $controller->edit();
+        break;
+    case 'normative_documents/update':
+        $controller = new NormativeDocumentController();
+        $controller->update();
+        break;
+    case 'energy-system/normative_documents/update':
+        $controller = new NormativeDocumentController();
+        $controller->update();
+        break;
+    case 'normative_documents/delete':
+        $controller = new NormativeDocumentController();
+        $controller->delete();
+        break;
+    case 'energy-system/normative_documents/delete':
+        $controller = new NormativeDocumentController();
+        $controller->delete();
+        break;
+    case 'normative_documents/updateStatus':
+        $controller = new NormativeDocumentController();
+        $controller->updateStatus();
+        break;
+    case 'energy-system/normative_documents/updateStatus':
+        $controller = new NormativeDocumentController();
+        $controller->updateStatus();
         break;
     default:
         // Not Found

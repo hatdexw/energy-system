@@ -18,6 +18,7 @@ if ($logged_in_user_id) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?? 'Energy System'; ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-neutral-100 font-sans flex h-screen">
@@ -42,6 +43,10 @@ if ($logged_in_user_id) {
                     <li><a href="/energy-system/documents" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
                         <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         Documentos
+                    </a></li>
+                    <li><a href="/energy-system/normative_documents" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
+                        <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Documentos Normativos
                     </a></li>
                     <li><a href="/energy-system/chamados?filter_status=Aberto" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
                         <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897m4.905-2.727l.777 2.897m0 4.905l.777 2.897M2.239 7.188l2.897.777m4.905 0l2.897.777M7.188 16.812l.777 2.897M16.812 7.188l2.897.777M16.812 16.812l2.897.777M3 15.25V4.75A2.75 2.75 0 015.75 2h12.5A2.75 2.75 0 0121 4.75v10.5A2.75 2.75 0 0118.25 18H5.75A2.75 2.75 0 013 15.25z"></path></svg>
