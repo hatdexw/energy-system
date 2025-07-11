@@ -53,7 +53,7 @@ ob_start();
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="participantes[]" id="participantes_hidden_input">
+            <input type="hidden" name="participantes_json" id="participantes_json_input">
         </div>
 
         <div class="flex items-center justify-end mt-6">
@@ -72,25 +72,14 @@ ob_start();
         const searchInput = document.getElementById('search_available_users');
         const availableUsersDiv = document.getElementById('available_users');
         const selectedUsersDiv = document.getElementById('selected_users');
-        const participantesHiddenInput = document.getElementById('participantes_hidden_input');
+        const participantesJsonInput = document.getElementById('participantes_json_input');
 
         // Store all available user items initially
         const allAvailableUserItems = Array.from(availableUsersDiv.children);
 
         function updateHiddenInput() {
             const selectedIds = Array.from(selectedUsersDiv.children).map(item => item.dataset.id);
-            // Clear previous hidden inputs if any (for multiple inputs with same name)
-            const existingHiddenInputs = document.querySelectorAll('input[name="participantes[]"]');
-            existingHiddenInputs.forEach(input => input.remove());
-
-            // Create new hidden inputs for each selected participant
-            selectedIds.forEach(id => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'participantes[]';
-                input.value = id;
-                participantesHiddenInput.parentNode.insertBefore(input, participantesHiddenInput.nextSibling);
-            });
+            participantesJsonInput.value = JSON.stringify(selectedIds);
         }
 
         function filterAvailableUsers() {

@@ -33,7 +33,8 @@ class ReuniaoController
             $titulo = $_POST['titulo'];
             $descricao = $_POST['descricao'];
             $data_hora = $_POST['data_hora'];
-            $participantes = $_POST['participantes'] ?? [];
+            $participantes_json = $_POST['participantes_json'] ?? '[]';
+            $participantes = json_decode($participantes_json, true);
             $criador_id = $_SESSION['user_id'];
 
             $reuniao_model = new Reuniao();
