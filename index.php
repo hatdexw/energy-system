@@ -6,12 +6,13 @@ require_once 'app/controllers/AuthController.php';
 require_once 'app/controllers/DocumentController.php';
 require_once 'app/controllers/ChamadoController.php'; // Alterado de TaskController
 
-require_once 'app/controllers/AuditController.php';
+
 require_once 'app/controllers/SectorController.php';
 require_once 'app/controllers/UserController.php';
 require_once 'app/controllers/PerifericoController.php';
 require_once 'app/controllers/ProfileController.php';
 require_once 'app/controllers/NotificationController.php';
+require_once 'app/controllers/ReuniaoController.php';
 
 $url = isset($_GET['url']) ? $_GET['url'] : 'home';
 
@@ -76,14 +77,7 @@ switch ($url) {
         $controller = new AuthController();
         $controller->changePassword();
         break;
-    case 'audits':
-        $controller = new AuditController();
-        $controller->index();
-        break;
-    case 'audits/create':
-        $controller = new AuditController();
-        $controller->create();
-        break;
+    
     case 'sectors':
         $controller = new SectorController();
         $controller->index();
@@ -161,6 +155,54 @@ switch ($url) {
     case 'notifications/mark-as-read':
         $controller = new NotificationController();
         $controller->markAsRead();
+        break;
+    case 'reunioes':
+        $controller = new ReuniaoController();
+        $controller->index();
+        break;
+    case 'energy-system/reunioes':
+        $controller = new ReuniaoController();
+        $controller->index();
+        break;
+    case 'reunioes/create':
+        $controller = new ReuniaoController();
+        $controller->create();
+        break;
+    case 'energy-system/reunioes/create':
+        $controller = new ReuniaoController();
+        $controller->create();
+        break;
+    case 'reunioes/show':
+        $controller = new ReuniaoController();
+        $controller->show();
+        break;
+    case 'energy-system/reunioes/show':
+        $controller = new ReuniaoController();
+        $controller->show();
+        break;
+    case 'reunioes/respond':
+        $controller = new ReuniaoController();
+        $controller->respond();
+        break;
+    case 'energy-system/reunioes/respond':
+        $controller = new ReuniaoController();
+        $controller->respond();
+        break;
+    case 'reunioes/updateStatus':
+        $controller = new ReuniaoController();
+        $controller->updateStatus();
+        break;
+    case 'energy-system/reunioes/updateStatus':
+        $controller = new ReuniaoController();
+        $controller->updateStatus();
+        break;
+    case 'reunioes/delete':
+        $controller = new ReuniaoController();
+        $controller->delete();
+        break;
+    case 'energy-system/reunioes/delete':
+        $controller = new ReuniaoController();
+        $controller->delete();
         break;
     default:
         // Not Found

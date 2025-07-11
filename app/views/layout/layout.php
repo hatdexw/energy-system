@@ -47,6 +47,10 @@ if ($logged_in_user_id) {
                         <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897m4.905-2.727l.777 2.897m0 4.905l.777 2.897M2.239 7.188l2.897.777m4.905 0l2.897.777M7.188 16.812l.777 2.897M16.812 7.188l2.897.777M16.812 16.812l2.897.777M3 15.25V4.75A2.75 2.75 0 015.75 2h12.5A2.75 2.75 0 0121 4.75v10.5A2.75 2.75 0 0118.25 18H5.75A2.75 2.75 0 013 15.25z"></path></svg>
                         Chamados
                     </a></li>
+                    <li><a href="/energy-system/reunioes" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
+                        <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Reuniões
+                    </a></li>
                 <?php endif; ?>
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                     <li><a href="/energy-system/perifericos" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
@@ -56,10 +60,7 @@ if ($logged_in_user_id) {
                 <?php endif; ?>
                 
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                    <li><a href="/energy-system/audits" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
-                        <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 2v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        Reuniões
-                    </a></li>
+                    
                     <li><a href="/energy-system/sectors" class="flex items-center py-2 px-4 rounded-lg text-neutral-200 hover:bg-neutral-700 hover:text-white transition duration-200 ease-in-out group">
                         <svg class="w-5 h-5 mr-3 text-neutral-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                         Setores
