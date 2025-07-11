@@ -97,7 +97,7 @@ if ($logged_in_user_id) {
                         <div class="px-4 py-2 text-sm text-gray-700 font-semibold border-b border-gray-200">Notificações</div>
                         <?php if ($notification_count > 0): ?>
                             <?php foreach ($unread_notifications as $notification): ?>
-                                <a href="/energy-system/notifications/mark-as-read?id=<?php echo $notification['id']; ?>" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">
+                                <a href="<?php echo htmlspecialchars($notification['link'] ?? '/energy-system/notifications/mark-as-read?id=' . $notification['id']); ?>" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100">
                                     <?php echo htmlspecialchars($notification['message']); ?>
                                 </a>
                             <?php endforeach; ?>

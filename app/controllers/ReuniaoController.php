@@ -2,6 +2,7 @@
 
 require_once 'app/models/Reuniao.php';
 require_once 'app/models/User.php';
+require_once 'app/models/Notification.php';
 
 class ReuniaoController
 {
@@ -39,6 +40,12 @@ class ReuniaoController
             $reuniao_id = $reuniao_model->create($titulo, $descricao, $data_hora, $criador_id, $participantes);
 
             if ($reuniao_id) {
+                $notification_model = new Notification();
+                $reuniao_link = "/energy-system/reunioes/show?id=" . $reuniao_id;
+                foreach ($participantes as $participante_id) {
+                    $message = "Você foi convidado para a reunião: \"" . $titulo . "\".";
+                    $notification_model->create($participante_id, $message, $reuniao_link);
+                }
                 header("Location: /energy-system/reunioes");
             } else {
                 $error = "Erro ao criar a reunião.";

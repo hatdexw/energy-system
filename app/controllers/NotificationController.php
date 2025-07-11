@@ -18,7 +18,14 @@ class NotificationController
 
         if ($notification_id) {
             // Mark a single notification as read
-            $notificationModel->markAsRead($notification_id);
+            $notification = $notificationModel->findById($notification_id);
+            if ($notification && $notification['user_id'] == $user_id) {
+                $notificationModel->markAsRead($notification_id);
+                if (!empty($notification['link'])) {
+                    header('Location: ' . $notification['link']);
+                    exit();
+                }
+            }
         } else {
             // Mark all notifications for the user as read
             $unread_notifications = $notificationModel->getUnreadNotifications($user_id);
@@ -27,7 +34,7 @@ class NotificationController
             }
         }
 
-        // Redirect back to the previous page or dashboard
+        // Redirect back to the previous page or dashboard if no specific link was followed
         header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/energy-system/dashboard'));
         exit();
     }

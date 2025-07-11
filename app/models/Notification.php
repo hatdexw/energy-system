@@ -4,12 +4,12 @@ require_once 'app/config/database.php';
 
 class Notification
 {
-    public function create($user_id, $message)
+    public function create($user_id, $message, $link = null)
     {
         global $conn;
 
-        $stmt = $conn->prepare("INSERT INTO notifications (user_id, message) VALUES (?, ?)");
-        $stmt->bind_param("is", $user_id, $message);
+        $stmt = $conn->prepare("INSERT INTO notifications (user_id, message, link) VALUES (?, ?, ?)");
+        $stmt->bind_param("iss", $user_id, $message, $link);
 
         return $stmt->execute();
     }
@@ -48,5 +48,18 @@ class Notification
         $result = $stmt->get_result();
 
         return $result->fetch_row()[0];
+    }
+
+    public function findById($notification_id)
+    {
+        global $conn;
+
+        $stmt = $conn->prepare("SELECT * FROM notifications WHERE id = ?");
+        $stmt->bind_param("i", $notification_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc();
     }
 }
